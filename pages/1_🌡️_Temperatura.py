@@ -1,30 +1,22 @@
-import streamlit as st
-import random
-import pandas as pd
-import time
+import websocket
+import threading
+import json
 
-st.set_page_config(layout="wide")
-st.title("🌡️ Monitoramento de Temperatura")
+# Função de callback quando receber nova mensagem
+def on_message(ws, message):
+    data = json.loads(message)
 
-placeholder = st.empty()
-historico = []
+    
+    # Log no console
+    print(f"Mensagem recebida: {data}")
 
-for _ in range(100):
-    valor = round(random.uniform(20, 30), 2)
-    historico.append({"valor": valor, "tempo": pd.Timestamp.now()})
-    if len(historico) > 50:
-        historico.pop(0)
+# Função de inicialização do WebSocket
+def iniciar_websocket():
+    ws = websocket.WebSocketApp("wss://d8c0-2804-14c-fc86-800f-d52c-c43-891c-2959.ngrok-free.app/ws/temperature",
+                                on_message=on_message)
+    ws.run_forever()
 
-    df = pd.DataFrame(historico).set_index("tempo")
 
-    with placeholder.container():
-        st.subheader("📈 Gráfico de Linha")
-        st.line_chart(df)
-
-        st.subheader("📊 Gráfico de Barras")
-        st.line_chart(df)
-
-        st.subheader("🟫 Gráfico de Área")
-        st.line_chart(df)
-
-    time.sleep(1)
+# Manter o script ativo
+while True:
+    pass

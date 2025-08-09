@@ -18,13 +18,13 @@ for _ in range(100):
     df = pd.DataFrame(historico).set_index("tempo")
 
     with placeholder.container():
-        st.subheader("📈 Gráfico de Linha")
+        st.subheader("📈 Sensor 1")
         st.line_chart(df)
 
-        st.subheader("📊 Gráfico de Barras")
+        st.subheader("📈 Sensor 2")
         st.line_chart(df)
 
-        st.subheader("🟫 Gráfico de Área")
+        st.subheader("📈 Sensor 3")
         st.line_chart(df)
 
     time.sleep(1)
